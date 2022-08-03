@@ -26,8 +26,9 @@ app.get('/', function (req, res) {
     res.render('home');
 });
 
-app.post('/', function (req, res) {
+app.post('/payment', function (req, res) {
     
+    console.log(req.body)
     res.sendStatus(200);
  
 });
