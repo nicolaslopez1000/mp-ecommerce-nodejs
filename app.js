@@ -4,7 +4,8 @@ var exphbs = require('express-handlebars');
 var port = process.env.PORT || 3000
 
 var app = express();
-const siteUrl = 'http://127.0.0.1:3000/'
+// const siteUrl = 'http://127.0.0.1:3000/'
+const siteUrl = 'https://nicolaslopez1000-mp-commerce-n.herokuapp.com/'
 
 const mercadopago = require('mercadopago');
 // Add Your credentials
@@ -27,10 +28,10 @@ app.get('/', function (req, res) {
 });
 
 app.post('/payment', function (req, res) {
-    
+
     console.log(req.body)
     res.sendStatus(200);
- 
+
 });
 
 app.get('/detail', async function (req, res) {
@@ -45,7 +46,7 @@ app.get('/detail', async function (req, res) {
             {
                 id: '1234',
                 title: query.title,
-                picture_url: siteUrl + query.img, 
+                picture_url: siteUrl + query.img,
                 unit_price: parseInt(query.price),
                 quantity: 1,
             }
@@ -72,10 +73,10 @@ app.get('/detail', async function (req, res) {
             }
         },
         payment_methods: {
-            installments:6,
-            excluded_payment_methods: 'visa'
+            installments: 6,
+            excluded_payment_methods: [{ id: 'visa' },]
         },
-        notification_url: siteUrl + 'payment'
+        notification_url: 'https://nicolaslopez1000-mp-commerce-n.herokuapp.com/payment'
     };
 
     var preference_id = await mercadopago.preferences.create(preference)
@@ -95,7 +96,8 @@ app.get('/detail', async function (req, res) {
 
 app.get('/success', function (req, res) {
     var query = req.query
-    res.render('state', query);});
+    res.render('state', query);
+});
 
 app.get('/pending', function (req, res) {
     var query = req.query
@@ -104,6 +106,7 @@ app.get('/pending', function (req, res) {
 
 app.get('/failure', function (req, res) {
     var query = req.query
-    res.render('state', query);});
+    res.render('state', query);
+});
 
 app.listen(port);
