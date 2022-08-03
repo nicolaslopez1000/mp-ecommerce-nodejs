@@ -39,16 +39,18 @@ app.post('/payment', function (req, res) {
 
 app.get('/detail', async function (req, res) {
     var query = req.query
-    //console.log(query)
+    console.log(query)
     // Create a preference object
 
+    var img_url = siteUrl + query.img.replace('./','')
 
     let preference = {
         items: [
             {
-                id: '1234',
+                id: 1234,
                 title: query.title,
-                picture_url: siteUrl + query.img,
+                description: "Dispositivo móvil de Tienda e-commerce",
+                picture_url: img_url,
                 unit_price: parseInt(query.price),
                 quantity: 1,
             }
@@ -58,15 +60,14 @@ app.get('/detail', async function (req, res) {
             success: siteUrl + 'success',
             pending: siteUrl + 'pending',
             failure: siteUrl + 'failure'
-        },
-        auto_return: "all",
+        },      
         payer: {
             name: "Lalo",
             surname: "Landa",
             email: "test_user_63274575@testuser.com",
             phone: {
                 area_code: "11",
-                number: 098674104
+                number: 98674104
             },
             address: {
                 street_name: "Falsa",
@@ -78,6 +79,7 @@ app.get('/detail', async function (req, res) {
             installments: 6,
             excluded_payment_methods: [{id: 'visa'},]
         },
+        auto_return: "approved",
         notification_url: 'https://nicolaslopez1000-mp-commerce-n.herokuapp.com/payment'
     };
 
