@@ -1,4 +1,4 @@
-const { query } = require('express');
+const {query} = require('express');
 var express = require('express');
 var exphbs = require('express-handlebars');
 var port = process.env.PORT || 3000
@@ -15,6 +15,8 @@ mercadopago.configure({
 
 });
 
+app.use(express.json());
+
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
@@ -28,8 +30,9 @@ app.get('/', function (req, res) {
 });
 
 app.post('/payment', function (req, res) {
-
+    console.log('*************************')
     console.log(req.body)
+    console.log('*************************')
     res.sendStatus(200);
 
 });
@@ -38,7 +41,6 @@ app.get('/detail', async function (req, res) {
     var query = req.query
     //console.log(query)
     // Create a preference object
-
 
 
     let preference = {
@@ -74,7 +76,7 @@ app.get('/detail', async function (req, res) {
         },
         payment_methods: {
             installments: 6,
-            excluded_payment_methods: [{ id: 'visa' },]
+            excluded_payment_methods: [{id: 'visa'},]
         },
         notification_url: 'https://nicolaslopez1000-mp-commerce-n.herokuapp.com/payment'
     };
